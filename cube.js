@@ -12,7 +12,6 @@ var numObst = 4;
 var vertDisp = 0;
 var NumVertices  =  36 + 3*2*2*48+72+108+72+72; //3*2*24
 console.log(NumVertices);
-//var count = 4;
 var circlePoints1 = [];
 var circlePoints2 = [];
 var thetaSection = 3.1415*2/48;
@@ -57,7 +56,6 @@ var axis = 0;
 var racerTheta = mat4();
 var theta = [ 0, 0, 0 ];
 
-//var obstTrans = mat4();// later be array
 var obstTheta = mat4();
 var cylinderTrans = mult(mat4(), translate(0,0,0));
 var thetaLoc;
@@ -94,16 +92,7 @@ window.onload = function init()
     colorCube(0);
 	colorCube(20);
 	makeObstacles();
-	//obstacle1();//cross
-	//rectangularPrism(.25,.75,.1,-.53,0);//Side clench
-	//rectangularPrism(.25,.75,.1,.53,0);
 	
-	
-	//rectangularPrism(.75,.6,0.1,0,.25);//Cube hole
-	//rectangularPrism(.25,.3,0.1,.5,-.65);
-	//rectangularPrism(.25,.3,0.1,-.5,-.65);
-	
-	//rectangularPrism(0.44,0.44,0.1,0.09,0.09);
     gl.viewport( 0, 0, canvas.width, canvas.height );
     gl.clearColor( 0.0, 0.0, 0.0, 1.0 );
 
@@ -148,7 +137,6 @@ window.onload = function init()
 	redTexture = gl.createTexture();
 	configureTexture( redImage,redTexture );
 
-    //thetaLoc = gl.getUniformLocation(program, "theta");
 	
 	// look up the elements we want to affect
 	var scoreElement = document.getElementById("score");
@@ -160,10 +148,7 @@ window.onload = function init()
  
 	// Add those text nodes where they need to go
 	scoreElement.appendChild(scoreNode);
-	loseElement.appendChild(loseNode);
-	
-	
-	
+	loseElement.appendChild(loseNode);	
 	var nBuffer = gl.createBuffer();
     gl.bindBuffer( gl.ARRAY_BUFFER, nBuffer);
     gl.bufferData( gl.ARRAY_BUFFER, flatten(normalsArray), gl.STATIC_DRAW );
@@ -177,28 +162,16 @@ window.onload = function init()
     gl.uniform4fv( gl.getUniformLocation(program, "specularProduct"),flatten(specularProduct) );
     gl.uniform4fv( gl.getUniformLocation(program, "lightPosition"),flatten(lightPosition) );
     gl.uniform1f( gl.getUniformLocation(program, "shininess"),materialShininess );
-	
-	
-    //event listeners for buttons
-	
 
 	document.addEventListener("keydown", function(event) {
 		var x = event.keyCode;
-		//var cenFacesCoord = [];
-		//if(rotCounter ==0 && dontRotate ==0){
 			if (x == 37) {
 				racerTheta = mult(racerTheta, rotate(2,[0,0,1]));
 				racerAngle -= 2;
-				//console.log(racerTheta);
-				//racerTheta = mult(racerTheta, translate(0,0,1));
-				//render();
-				//requestAnimFrame(render);
 			}
 			if (x == 39) {
 				racerTheta = mult(racerTheta, rotate(-2,[0,0,1]))
 				racerAngle += 2;
-				//render();
-				//requestAnimFrame(render);
 			}
 			if(racerAngle>=360){
 				racerAngle = racerAngle - 360;
@@ -206,9 +179,6 @@ window.onload = function init()
 			else if(racerAngle < 0){
 				racerAngle = racerAngle + 360;
 			}
-			//console.log(racerTheta);
-			//console.log(racerAngle);
-		//}
 	});
 
     render();
@@ -704,9 +674,6 @@ function render()
 		}
 		vertNumTemp = vertNumTemp + obstVerts[po];
 	}
-	//gl.uniformMatrix4fv(rotateLoc,false,flatten(obstTheta));
-	//gl.uniformMatrix4fv(transLoc,false,flatten(obstTrans));
-	//gl.drawArrays( gl.TRIANGLES, NumVertices-108, 108);
 
     requestAnimFrame( render );
 }
